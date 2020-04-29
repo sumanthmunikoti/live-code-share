@@ -1,17 +1,33 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import { ControlledEditor } from "@monaco-editor/react";
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const BAD_WORD = "eval";
+const WORNING_MESSAGE = " <- hey man, what's this?";
+
+function App() {
+  const [value, setValue] = useState("// write javascript code here \n");
+
+  const handleEditorChange = (ev, value) => {
+    setValue(
+      value.includes(BAD_WORD) && !value.includes(WORNING_MESSAGE)
+        ? value.replace(BAD_WORD, BAD_WORD + WORNING_MESSAGE)
+        : value.includes(WORNING_MESSAGE) && !value.includes(BAD_WORD)
+        ? value.replace(WORNING_MESSAGE, "")
+        : value
+    );
+  };
+
+  return (
+    <ControlledEditor
+      height="90vh"
+      value={value}
+      onChange={handleEditorChange}
+      language="javascript"
+    />
+  );
+}
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
