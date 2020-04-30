@@ -9,7 +9,7 @@ const BAD_WORD = "eval";
 const WARNING_MESSAGE = " <- hey man, what's this?";
 
 function App() {
-    const [response, setResponse] = useState("// write javascript code here \n");
+    const [response, setResponse] = useState("");
 
     const handleEditorChange = (ev, value) => {
         setResponse(
