@@ -82,6 +82,7 @@ const Chat = ({ location }) => {
                 <h3>Type your code here</h3>
                 <ControlledEditor
                     height="90vh"
+                    language="javascript"
                     value={code.text}
                     onChange={handleEditorChange}/>
                 </Pane>
