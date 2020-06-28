@@ -16,6 +16,7 @@ const Chat = ({ location }) => {
     const [message, setMessage] = useState('')
     const [code, setCode] = useState('')
     const [messages, setMessages] = useState([])
+    // const ENDPOINT = 'https://live-code-share-server.herokuapp.com'
     const ENDPOINT = 'localhost:5000'
 
     useEffect(() => {

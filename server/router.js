@@ -5,4 +5,8 @@ router.get('/', (req, res) => {
     res.send('server is up and running')
 })
 
+// router.get('*', (req, res) => {
+//     res.send('server is up and about')
+// })
+
 module.exports = router
