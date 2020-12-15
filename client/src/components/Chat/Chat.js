@@ -42,11 +42,11 @@ const Chat = ({ location }) => {
     }, [messages])
 
     useEffect(() => {
-        socket.on('code', (code) => {
-            console.log(code)
+        socket.once('code', (code) => {
+            console.log("frontend: " + code)
             setCode(code)
         })
-    }, [])
+    })
 
     const sendMessage = (e) => {
         e.preventDefault()
@@ -58,7 +58,7 @@ const Chat = ({ location }) => {
 
     const sendCode = (value) => {
         socket.emit('sendCode', value, () => {
-            // console.log('Code delivered')
+            console.log(value)
         })
     }
 
@@ -66,7 +66,19 @@ const Chat = ({ location }) => {
     const BAD_WORD = "eval";
     const WARNING_MESSAGE = " <- hey man, what's this?";
 
+    var valueList = []
+
+    
+
     const handleEditorChange = (ev, value) => {
+        // valueList.push(value[value.length - 1])
+        
+        // setTimeout(() => {
+        //     sendCode(valueList[0])
+        //     valueList.shift()
+        //     console.log('valUe List ---- ', valueList)
+        // }, 1000)
+        
         sendCode(value)
         // console.log(value)
         // return value.includes(BAD_WORD) && !value.includes(WARNING_MESSAGE)
