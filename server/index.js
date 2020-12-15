@@ -26,14 +26,17 @@ io.on('connection', (socket) => {
 
     socket.on('sendMessage', (message, callback) => {
         const user = getUser(socket.id)
-        io.to(user.room).emit('message', { user : user.name, text: message})
+        if(user) io.to(user.room).emit('message', { user : user.name, text: message})
         callback()
     })
 
     socket.on('sendCode', (code, callback) => {
-        // console.log(code)
+        console.log(code)
         const user = getUser(socket.id)
-        io.to(user.room).emit('code', { user : user.name, text: code })
+        if(user) {
+            io.to(user.room).emit('code', { user : user.name, text: code })
+        }
+        
         callback()
     })
 
