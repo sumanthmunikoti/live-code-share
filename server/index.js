@@ -38,9 +38,7 @@ io.on('connection', (socket) => {
         if(user) {
             io.to(user.room).emit('code', { user : user.name, text: code })
         }
-        // callback()
     })
-
 
     socket.on('disconnect', () => {
         console.log("User has left")
