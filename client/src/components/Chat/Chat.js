@@ -27,7 +27,6 @@ const Chat = ({ location }) => {
         setRoom(room)
         setName(name)
 
-
         socket.emit('join', { name, room }, (error) => {
             if(error) {
                 alert(error);
@@ -41,52 +40,36 @@ const Chat = ({ location }) => {
         })
     }, [messages])
 
-    useEffect(() => {
-        socket.once('code', (code) => {
-            console.log("frontend: " + code)
-            setCode(code)
-        })
-    })
-
     const sendMessage = (e) => {
         e.preventDefault()
-
         if (message) {
             socket.emit('sendMessage', message, () => setMessage(''))
         }
     }
-
-    const sendCode = (value) => {
-        socket.emit('sendCode', value, () => {
-            console.log(value)
-        })
-    }
-
 
     const BAD_WORD = "eval";
     const WARNING_MESSAGE = " <- hey man, what's this?";
 
     var valueList = []
 
-    
+    // ----------------------------------------------------
 
     const handleEditorChange = (ev, value) => {
-        // valueList.push(value[value.length - 1])
-        
-        // setTimeout(() => {
-        //     sendCode(valueList[0])
-        //     valueList.shift()
-        //     console.log('valUe List ---- ', valueList)
-        // }, 1000)
-        
         sendCode(value)
-        // console.log(value)
-        // return value.includes(BAD_WORD) && !value.includes(WARNING_MESSAGE)
-        //   ? value.replace(BAD_WORD, BAD_WORD + WARNING_MESSAGE)
-        //   : value.includes(WARNING_MESSAGE) && !value.includes(BAD_WORD)
-        //     ? value.replace(WARNING_MESSAGE, "")
-        //     : value;
-      }
+    }
+
+    const sendCode = (value) => {
+        socket.emit('sendCode', value, () => {
+            console.log("1 value: " + value)
+        })
+    }
+
+    useEffect(() => {
+        socket.once('code', (code) => {
+            console.log("3 frontend: " + code.text)
+            setCode(code)
+        })
+    }, [code])
 
     return (
         <div>
